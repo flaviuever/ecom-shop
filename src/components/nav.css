@@ -1,0 +1,40 @@
+
+.navBar ul {
+    margin-top: 50px;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+.link {
+    height: max-content;
+    width: max-content;
+    color: black;
+    font-size: 20px;
+    text-decoration: none;
+    padding: 10px 20px 10px 20px;
+    margin: 10px;
+    background-color: white;
+    border-radius: 25px;
+}
+
+.linkToProm {
+    color: black;
+    font-size: 30px;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: white;
+    border-radius: 25px;
+}
+
+.link:hover{
+    color: white;
+    background-color: brown;
+}
+
+
+.linkToProm:hover{
+    color: white;
+    background-color: rgb(44, 124, 228);
+}

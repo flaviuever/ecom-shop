@@ -1,0 +1,100 @@
+.shopItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid black;
+    margin: 55px 25px;
+    padding: 25px 15px;
+    font-size: 15px;
+    width: 30%;
+}
+
+.shopItem img{
+    height: 200px;
+    width: 300px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin: 25px;
+}
+
+.more-info-btn{
+    border: none;
+    margin: 5px;
+}
+
+.btn {
+    margin: 10px;
+}
+
+.Products{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.filterArea {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    position: fixed; /* Set the navbar to fixed position */
+    color: white;
+    background-color: rgb(43, 42, 42);
+    top: 0; /* Position the navbar at the top of the page */
+    left: 0;
+    width: 100%;
+    height: 50px;
+}
+
+.label{
+    font-size: 18px;
+}
+
+.input{
+    height: 30px;
+    width: 150px;
+}
+
+.returnBtn {
+    height: 30px;
+    border: none;
+    font-size: 11px;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.returnBtn:hover{
+    background-color: rgb(235, 235, 235);
+    color: brown;
+}
+
+.cart {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 45px;
+    width: 350px;
+    background-color: rgb(1, 144, 180);
+    color: white;
+}
+
+.inputCoupon {
+    height: 30px;
+    width: 150px;
+    margin: 0;
+}
+
+.applyBtn {
+    border: none;
+    padding: 5px;
+    background-color: brown;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.resetBtn {
+    border: none;
+    border-radius: 50%;
+    background-color: brown;
+    height: 40px;
+    width: 40px;
+
+}

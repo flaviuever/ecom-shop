@@ -899,12 +899,12 @@ let productList3 = [
 ]
 
 function getProductsForCategory(categoryId) {
-    if (categoryId == 1) {
+    if (categoryId === 1) {
         return [...productList1]
-    } else if (categoryId == 2) {
+    } else if (categoryId === 2) {
         return [...productList2]
-    } else if (categoryId == 3) {
-        return [...productList1]
+    } else if (categoryId === 3) {
+        return [...productList3]
     } else {
         return []
     }
