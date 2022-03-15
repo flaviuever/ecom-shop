@@ -6,20 +6,7 @@
 
 .container {
     min-width: 100%;
-    background-color: whitesmoke;
+    margin-top: 100px;
 }
 
-.langBtn{
-    margin: 10px;
-    width: 70px;
-    border: none;
-    border-radius: 15px;
-    padding-right: 15px;
-}
-
-.langBtn:hover{
-    background-color: rgb(163, 46, 46);
-    color: white;
-    font-size: 16px;
-}
 

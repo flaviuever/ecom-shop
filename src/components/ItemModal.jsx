@@ -33,7 +33,6 @@ return (
                 alt = "img" 
                 style={{ height: '300px', width: '227,82px' }}
                 />
-                
                 <p>{selectedLanguage.labelForName} : {modalName}</p>
                 <p>{selectedLanguage.labelForCategory}: {modalCategory}</p>
                 <p>{selectedLanguage.labelForDescription} : {modalDescription}</p>

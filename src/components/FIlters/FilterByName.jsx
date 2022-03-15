@@ -1,7 +1,7 @@
+import './filters.css'
 const FilterByName = ({onChangeName, filteredName, selectedLanguage}) => {
     return (
-        <>
-        <div>
+        <div className="filter">
         <label className="label" htmlFor="names">{selectedLanguage.labelForFilterName}</label>
 
             <input  className="input"
@@ -10,7 +10,7 @@ const FilterByName = ({onChangeName, filteredName, selectedLanguage}) => {
                     onChange={onChangeName}
                     />
         </div>
-        </>
+    
     )
 }
 

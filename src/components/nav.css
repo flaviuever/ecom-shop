@@ -1,40 +1,30 @@
 
-.navBar ul {
-    margin-top: 50px;
+.ulList {
     list-style-type: none;
     display: flex;
     justify-content: space-around;
+    align-self: center;
+    
+}
+
+.navBar {
+    background-color: #e41d34;
+    width: 100%;
+    height: 60px;
 }
 
 .link {
-    height: max-content;
-    width: max-content;
-    color: black;
+    color: white;
+    font-weight: 700;
+    letter-spacing: 1px;
     font-size: 20px;
     text-decoration: none;
-    padding: 10px 20px 10px 20px;
-    margin: 10px;
-    background-color: white;
     border-radius: 25px;
-}
-
-.linkToProm {
-    color: black;
-    font-size: 30px;
-    text-decoration: none;
-    padding: 10px 20px;
     margin: 10px;
-    background-color: white;
-    border-radius: 25px;
+    padding: 5px;
 }
 
 .link:hover{
-    color: white;
-    background-color: brown;
-}
-
-
-.linkToProm:hover{
-    color: white;
-    background-color: rgb(44, 124, 228);
+    color: #e41d34;
+    background-color: white;
 }

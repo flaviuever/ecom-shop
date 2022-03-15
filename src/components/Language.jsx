@@ -1,19 +1,19 @@
+import Flags from 'country-flag-icons/react/3x2'
 import language from "../language";
+import "./category.css"
 
 const Language = ({ selectedLanguage, setSelectedLanguage }) => {
 
     return (
-        <>
-        <label htmlFor="cards">{selectedLanguage.labelForLanguage}</label>
-        
-        <button className="langBtn" onClick={() => setSelectedLanguage(language.english)}>
-          <i className="flag">ENG</i>
-        </button>
-
-        <button className="langBtn" onClick={() => setSelectedLanguage(language.romanian)}>
-          <i className="flag">ROU</i>
-        </button>
-        </>
+        <div className='flags'>
+          <button className="langBtn" onClick={() => setSelectedLanguage(language.english)}>
+            <Flags.EU className="flag" title="Europe" />
+          </button>
+          
+          <button className="langBtn" onClick={() => setSelectedLanguage(language.romanian)}>
+            <Flags.RO className="flag" title="Roumania" />
+          </button>
+        </div>
     )
 }
 

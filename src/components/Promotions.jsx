@@ -5,9 +5,9 @@ import Random from "./Random";
 const Promotions = ( ) => {
     
     return (
-        <div className="promoStyle">
-        <Random />
-        </div>
+        // <div className="promoStyle"></div>
+            <Random />
+        
     )
 }   
 
