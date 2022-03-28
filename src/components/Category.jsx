@@ -3,6 +3,7 @@
     import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
     import Badge from "@mui/material/Badge";
     import { styled } from "@mui/material/styles";
+    import { useAuth0 } from '@auth0/auth0-react';
     import { useParams } from "react-router";
     import { useEffect, useState } from "react";
     import { Link } from "react-router-dom";
@@ -14,18 +15,19 @@
     import CartSection from "./CartSection";
     import Coupon from "./Coupon";
     import ItemModal from "./ItemModal";
-    import logo from "../pictures/ecom-logo.png";
+    
     import Loader from "./Loader";
     import "./category.css";
+import { Button } from "react-bootstrap";
 
     // butonul checkout trebuie sa ma duca pe pagina de cos
     // adauga buton la produsele din carousel
-    // schimba logo
     // modific filtrele
 
 
     const Category = ({ selectedLanguage, setSelectedLanguage }) => {
-    const apiURL = 'https://fakestoreapi.com/products';
+    // const apiURL = 'https://fakestoreapi.com/products';
+    const apiURL = `https://api.punkapi.com/v2/beers/`;
 
     const { categoryId } = useParams();
     let offersData = getProductsForCategory(parseInt(categoryId));
@@ -73,12 +75,12 @@
 
     const handleMoreInfo = (item) => {
         setShowModal(true);
-        setModalImg(item.image);
+        setModalImg(item.image_url);
         setModalName(item.name);
-        setModalCategory(item.category);
+        setModalCategory(item.tagline);
         setModalDescription(item.description);
         setModalShortDescription(item.shortDescription);
-        setModalPrice(item.price);
+        // setModalPrice(item.price);
     };
 
     const onButtonClick = (id) => {
@@ -118,7 +120,6 @@
         ...getProductsForCategory(1),
         ...getProductsForCategory(2),
         ...getProductsForCategory(3),
-        ...category
         ];
         newArr = offersData.filter((item) => {
         return (
@@ -210,10 +211,8 @@
         }
     };
 
-    const goToShopList = () => {
-        let newArr = [];
-        newArr = offersData;
-        setCategory(newArr);
+    const goToBeer = () => {
+        fetchProducts();
     };
 
     const showFilterArea = () => {
@@ -242,12 +241,13 @@
     };
 
     const searchForProduct = () => {
-        let result = [];
-        result = offersData.filter((item) =>
+        let result = [...offersData, ...category];
+        let filteredResult = result.filter((item) =>
         item.name.toLowerCase().includes(selectedProduct)
         );
-        setCategory(result);
+        setCategory(filteredResult);
     };
+
 
     const StyledBadge = styled(Badge)(({ theme }) => ({
         "& .MuiBadge-badge": {
@@ -260,159 +260,154 @@
 
     return (
         <div className="main-page">
-        <div className="filterArea">
-            <div className="logo-area">
-            <h2 className="logo">THE STREET STORE</h2>
-            <div className="input-bar">
-                <input
-                className="logo-input-search"
-                onChange={(e) => setSelectedProduct(e.target.value)}
-                type="search"
-                placeholder="You have the freedom to choose anything"
-                />
-                <button className="search-btn" onClick={searchForProduct}>
-                <i className="fas fa-search"></i>
-                </button>
-            </div>
-            <Link
-                to="/category/"
-                className="back-to-products btn"    
-            >
-                See main products
-            </Link>
-            </div>
-            <div className="right-side">
-            <Language
-                selectedLanguage={selectedLanguage}
-                setSelectedLanguage={setSelectedLanguage}
-            />
-            <div className="dropdown">
-                <button className="filter-area btn" onClick={showFilterArea}>
-                Filter area
-                </button>
-                <div
-                className={
-                    showDropdown ? "dropdown-menu active" : "dropdown-menu"
-                }
-                onMouseLeave={() => setShowDropdown(false)}
-                >
-                {/* aici voi pune filtrele */}
-                <FilterByCategory
-                    onChangeCategory={onChangeCategory}
-                    categoryList={categoryList}
-                    categoryFilter={categoryFilter}
-                    selectedLanguage={selectedLanguage}
-                />
-
-                <FilterByName
-                    filteredName={filteredName}
-                    onChangeName={onChangeName}
-                    selectedLanguage={selectedLanguage}
-                />
-
-                <FilterByPrice
-                    onChangePrice={onChangePrice}
-                    filteredPrice={filteredPrice}
-                    selectedLanguage={selectedLanguage}
-                />
-
-                <button
-                    title="Reset Everything"
-                    className="resetBtn"
-                    onClick={ResetAllFilters}
-                >
-                    <i className="far fa-trash-alt"></i>
-                </button>
+            <div className="filterArea">
+                <div className="logo-area">
+                    <h2 className="logo">THE STREET STORE</h2>
+                    <div className="input-bar">
+                        <input
+                        className="logo-input-search"
+                        onChange={(e) => setSelectedProduct(e.target.value)}
+                        type="search"
+                        placeholder="You have the freedom to choose anything"
+                        />
+                        <button className="search-btn" onClick={searchForProduct}>
+                        <i className="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <Button
+                    onClick={goToBeer}
+                    className="back-to-products btn">Take me to beer</Button>
                 </div>
-            </div>
-
-            <div className="category-cart">
-                <div className="icon-btn-area" onClick={showCartArea}>
-                <button
-                    className="cart-icon"
-                    aria-label="cart"
-                    onClick={openCart}
-                >
-                    {/* // onMouseEnter={() => setShowCartDropdown(true)}> */}
-                    {/* onMouseLeave={() => setShowCartDropdown(false)} */}
-                    <StyledBadge badgeContent={numOfProducts} color="secondary">
-                    <ShoppingCartIcon />
-                    </StyledBadge>
-                </button>
-                </div>
-
-                <div
-                className={
-                    !showCartDropdown ? "cart-dropdown" : "cart-dropdown active"
-                }
-                onMouseLeave={() => setShowCartDropdown(false)}
-                >
-                <Coupon
-                    cartIsOpen={cartIsOpen}
-                    setCartIsOpen={setCartIsOpen}
-                    discountValue={discountValue}
-                    discountHandler={discountHandler}
-                    applyDiscount={applyDiscount}
+                <div className="right-side">
+                <Language
                     selectedLanguage={selectedLanguage}
+                    setSelectedLanguage={setSelectedLanguage}
                 />
-                <CartSection
-                    cartIsOpen={cartIsOpen}
-                    openCart={openCart}
-                    closeCart={closeCart}
-                    totalPrice={totalPrice}
-                    numOfProducts={numOfProducts}
-                    priceAfterDiscount={priceAfterDiscount}
-                    selectedLanguage={selectedLanguage}
-                    showCartDropdown={showCartDropdown}
-                    setShowCartDropdown={setShowCartDropdown}
-                />
-                </div>
-            </div>
-            </div>
-        </div>
-
-        <div className="Products">
-            {isLoading ? category.map((item) => {
-            return (
-                <div key={item.id} className="shopItem">
-                    <img src={item.image} alt={item.name} />
-                    <p>
-                        {selectedLanguage.labelForName} : {item.title}
-                    </p>
-                    <p>
-                        {selectedLanguage.labelForCategory} : {item.category}
-                    </p>
-                    <p>
-                        {selectedLanguage.labelForPrice} : ${item.price}
-                    </p>
-                    <button onClick={() => onButtonClick(item.id)} className="btn">
-                        {item.isAdded
-                        ? selectedLanguage.labelForRemove
-                        : selectedLanguage.labelForAdd}
+                <div className="dropdown">
+                    <button className="filter-area btn" onClick={showFilterArea}>
+                    Filter area
                     </button>
-                    <button
-                        className="more-info-btn"
-                        onClick={() => handleMoreInfo(item)}
+                    <div
+                    className={
+                        showDropdown ? "dropdown-menu active" : "dropdown-menu"
+                    }
+                    onMouseLeave={() => setShowDropdown(false)}
                     >
-                        more info...
+                    {/* aici voi pune filtrele */}
+                    <FilterByCategory
+                        onChangeCategory={onChangeCategory}
+                        categoryList={categoryList}
+                        categoryFilter={categoryFilter}
+                        selectedLanguage={selectedLanguage}
+                    />
+
+                    <FilterByName
+                        filteredName={filteredName}
+                        onChangeName={onChangeName}
+                        selectedLanguage={selectedLanguage}
+                    />
+
+                    <FilterByPrice
+                        onChangePrice={onChangePrice}
+                        filteredPrice={filteredPrice}
+                        selectedLanguage={selectedLanguage}
+                    />
+
+                    <button
+                        title="Reset Everything"
+                        className="resetBtn"
+                        onClick={ResetAllFilters}
+                    >
+                        <i className="far fa-trash-alt"></i>
                     </button>
+                    </div>
                 </div>
-            );
-            }) : <Loader />}
 
-        </div>
+                <div className="category-cart">
+                    <div className="icon-btn-area" onClick={showCartArea}>
+                    <button
+                        className="cart-icon"
+                        aria-label="cart"
+                        onClick={openCart}
+                    >
+                        {/* // onMouseEnter={() => setShowCartDropdown(true)}> */}
+                        {/* onMouseLeave={() => setShowCartDropdown(false)} */}
+                        <StyledBadge badgeContent={numOfProducts} color="secondary">
+                        <ShoppingCartIcon />
+                        </StyledBadge>
+                    </button>
+                    </div>
 
-        <ItemModal
-            show={showModal}
-            onHide={() => setShowModal(false)}
-            modalImg={modalImg}
-            modalName={modalName}
-            modalCategory={modalCategory}
-            modalDescription={modalDescription}
-            modalShortDescription={modalShortDescription}
-            modalPrice={modalPrice}
-            selectedLanguage={selectedLanguage}
-        />
+                    <div
+                    className={
+                        !showCartDropdown ? "cart-dropdown" : "cart-dropdown active"
+                    }
+                    onMouseLeave={() => setShowCartDropdown(false)}
+                    >
+                    <Coupon
+                        cartIsOpen={cartIsOpen}
+                        setCartIsOpen={setCartIsOpen}
+                        discountValue={discountValue}
+                        discountHandler={discountHandler}
+                        applyDiscount={applyDiscount}
+                        selectedLanguage={selectedLanguage}
+                    />
+                    <CartSection
+                        cartIsOpen={cartIsOpen}
+                        openCart={openCart}
+                        closeCart={closeCart}
+                        totalPrice={totalPrice}
+                        numOfProducts={numOfProducts}
+                        priceAfterDiscount={priceAfterDiscount}
+                        selectedLanguage={selectedLanguage}
+                        showCartDropdown={showCartDropdown}
+                        setShowCartDropdown={setShowCartDropdown}
+                    />
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <div className="Products">
+                {isLoading ? category.map((item) => {
+                return (
+                    <div key={item.id} className="shopItem">
+                        <img src={item.image_url} alt={item.name} />
+                        <p>
+                            {selectedLanguage.labelForName} : {item.name}
+                        </p>
+                        <p>
+                            {selectedLanguage.labelForCategory} : {item.tagline}
+                        </p>
+                        <p>
+                            {selectedLanguage.labelForPrice} : ${item.price}
+                        </p>
+                        <button onClick={() => onButtonClick(item.id)} className="btn">
+                            {item.isAdded
+                            ? selectedLanguage.labelForRemove
+                            : selectedLanguage.labelForAdd}
+                        </button>
+                        <button
+                            className="more-info-btn"
+                            onClick={() => handleMoreInfo(item)}
+                        >
+                            more info...
+                        </button>
+                    </div>
+                )}) : <Loader />}
+            </div>
+
+            <ItemModal
+                show={showModal}
+                onHide={() => setShowModal(false)}
+                modalImg={modalImg}
+                modalName={modalName}
+                modalCategory={modalCategory}
+                modalDescription={modalDescription}
+                modalShortDescription={modalShortDescription}
+                modalPrice={modalPrice}
+                selectedLanguage={selectedLanguage}
+            />
         </div>
     );
     };
